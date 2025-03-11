@@ -1,0 +1,31 @@
+services:
+  - type: web
+    name: afor-rh
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app --bind 0.0.0.0:$PORT
+    envVars:
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_KEY
+        sync: false
+      - key: DB_NAME
+        value: postgres
+      - key: DB_USER
+        value: postgres
+      - key: DB_HOST
+        sync: false
+      - key: DB_PORT
+        value: "5432"
+      - key: DB_PASSWORD
+        sync: false
+      - key: FLASK_SECRET_KEY
+        generateValue: true
+      - key: PORT
+        value: "10000"
+      - key: DATABASE_URL
+        value: "/opt/render/project/src/data/db/geogestion.db"
+    disk:
+      name: data
+      mountPath: /opt/render/project/src/data
+      sizeGB: 1
